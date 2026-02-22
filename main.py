@@ -1,10 +1,14 @@
 import requests
 from bs4 import BeautifulSoup
+from time import sleep
 
 url = "https://www.groza-motors.ru/catalog/mototsikly/"
 
+# Скрываем от сайта, что это парсер
+headers={'User-agent': 'Mozilla /5.0 (Windows NT 8; Win64; x64) AppleWebKit /729.0 Safari'}
+
 # Получение данных с сайта
-response = requests.get(url)
+response = requests.get(url, headers=headers)
 
 # Разбор полученных HTML-данных
 soup = BeautifulSoup(response.text, "lxml")
@@ -14,6 +18,8 @@ data = soup.find_all(class_="js-load-content1")
 
 # Создаем цикл, чтобы пройтись по всем карточкам товаров на странице
 for i in data:
+    # Делаем задержку в 3 секунд между запросами, чтобы не забанили
+    sleep(3)
     # Получаем название товара из класса html страницы
     # С помощью метода text, выводим в консоль только текст.С помощью strip удаляем пробелы в начале и в конце сторки
     name = i.find(class_="non_decoration text-sm font-medium xl:text-xl js-notice-block__title").text.strip()
