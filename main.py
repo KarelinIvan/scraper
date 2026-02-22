@@ -20,6 +20,12 @@ for i in data:
 
     # Получаем цену товара
     price = i.find(class_="card-product-card__prices").text.strip()
+
     # Выводим данные о статусе товара в магазине
     product_availability = i.find(class_="product-amount_title").text
-    print(f"Наименование товара: {name} Цена: {price} Статус: {product_availability}")
+
+    # Ссылка на товар
+    url_product = "https://www.groza-motors.ru" + i.find(class_="non_decoration btn-main mt-auto w-full rounded-sm px-6 py-4 text-center font-semibold xl:hidden").get("href")
+
+    # Принтуем данные в строку
+    print(f"Наименование товара: {name} Цена: {price} Статус: {product_availability} Ссылка на товар: {url_product}")
